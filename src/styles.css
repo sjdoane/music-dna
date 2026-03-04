@@ -1,0 +1,241 @@
+/* ─── CSS Variables ─────────────────────────────────────────────── */
+:root {
+  --navy:       #1a1a2e;
+  --navy-light: #2a2a4e;
+  --gold:       #e8b86d;
+  --gold-light: #f0d4a0;
+  --cream:      #f5f0e8;
+  --rose:       #c4727f;
+  --vinyl:      #111111;
+  --text-main:  #f5f0e8;
+  --text-muted: #a89f91;
+}
+
+/* ─── Animations ────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background-color: var(--navy);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* ─── Grain texture overlay ─────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* ─── Typography ────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ─── Scroll-reveal animation ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Stagger children ──────────────────────────────────────────── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stagger-children.visible > *:nth-child(1)  { opacity: 1; transform: none; transition-delay: 0.05s; }
+.stagger-children.visible > *:nth-child(2)  { opacity: 1; transform: none; transition-delay: 0.10s; }
+.stagger-children.visible > *:nth-child(3)  { opacity: 1; transform: none; transition-delay: 0.15s; }
+.stagger-children.visible > *:nth-child(4)  { opacity: 1; transform: none; transition-delay: 0.20s; }
+.stagger-children.visible > *:nth-child(5)  { opacity: 1; transform: none; transition-delay: 0.25s; }
+.stagger-children.visible > *:nth-child(6)  { opacity: 1; transform: none; transition-delay: 0.30s; }
+.stagger-children.visible > *:nth-child(7)  { opacity: 1; transform: none; transition-delay: 0.35s; }
+.stagger-children.visible > *:nth-child(8)  { opacity: 1; transform: none; transition-delay: 0.40s; }
+.stagger-children.visible > *:nth-child(9)  { opacity: 1; transform: none; transition-delay: 0.45s; }
+.stagger-children.visible > *:nth-child(10) { opacity: 1; transform: none; transition-delay: 0.50s; }
+.stagger-children.visible > *:nth-child(n+11) { opacity: 1; transform: none; transition-delay: 0.55s; }
+
+/* ─── Vinyl spin ────────────────────────────────────────────────── */
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.vinyl-spin {
+  animation: vinyl-spin 2s linear infinite;
+}
+
+/* ─── Floating notes ────────────────────────────────────────────── */
+@keyframes float-note {
+  0%   { transform: translateY(0)   rotate(0deg);   opacity: 0.7; }
+  50%  { transform: translateY(-24px) rotate(12deg); opacity: 0.4; }
+  100% { transform: translateY(0)   rotate(0deg);   opacity: 0.7; }
+}
+
+.float-note {
+  animation: float-note 4s ease-in-out infinite;
+}
+
+/* ─── Spotify button ────────────────────────────────────────────── */
+.spotify-btn {
+  background: #1DB954;
+  color: #fff;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.spotify-btn:hover {
+  background: #1ed760;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(29, 185, 84, 0.35);
+}
+
+.spotify-btn:active {
+  transform: translateY(0);
+}
+
+/* ─── Section divider ───────────────────────────────────────────── */
+.section-divider {
+  width: 64px;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 0 auto 2rem;
+}
+
+/* ─── Artist card ───────────────────────────────────────────────── */
+.artist-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: default;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.artist-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.artist-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.artist-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,17,17,0.9) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+/* ─── Track row ─────────────────────────────────────────────────── */
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.track-row:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* ─── Genre tag ─────────────────────────────────────────────────── */
+.genre-tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--navy-light), var(--vinyl));
+  border: 1px solid rgba(232,184,109,0.25);
+  color: var(--gold);
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.genre-tag:hover {
+  transform: scale(1.05);
+  border-color: var(--gold);
+}
+
+/* ─── Album recommendation card ─────────────────────────────────── */
+.album-card {
+  background: linear-gradient(145deg, rgba(42,42,78,0.8), rgba(17,17,17,0.9));
+  border: 1px solid rgba(232,184,109,0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.album-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+  border-color: rgba(232,184,109,0.4);
+}
+
+/* ─── Personal note paper ───────────────────────────────────────── */
+.letter-paper {
+  background: var(--cream);
+  color: #2a1f14;
+  border-radius: 4px;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.12),
+    0 8px 32px rgba(0,0,0,0.2),
+    inset 0 0 0 1px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+.letter-paper::before {
+  content: '';
+  position: absolute;
+  left: 64px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(196, 114, 127, 0.3);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--vinyl); }
+::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
